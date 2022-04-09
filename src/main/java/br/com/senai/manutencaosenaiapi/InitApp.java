@@ -10,9 +10,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import br.com.senai.manutencaosenaiapi.entity.Cliente;
+import br.com.senai.manutencaosenaiapi.entity.Peca;
 import br.com.senai.manutencaosenaiapi.entity.Tecnico;
 import br.com.senai.manutencaosenaiapi.enums.Sexo;
 import br.com.senai.manutencaosenaiapi.service.ClienteService;
+import br.com.senai.manutencaosenaiapi.service.PecaService;
 import br.com.senai.manutencaosenaiapi.service.TecnicoService;
 
 @SpringBootApplication
@@ -28,6 +30,9 @@ public class InitApp {
 	
 	@Autowired
 	private ClienteService clienteService;
+	
+	@Autowired
+	private PecaService pecaService;
 	
 	@Bean	
 	public CommandLineRunner commandLineRunner(ApplicationContext ac) {
@@ -46,15 +51,22 @@ public class InitApp {
 				System.out.println("Técnico salvo com sucesso");*/
 				/*this.service.listarPor("Carlos Eduardo");
 				this.service.removerPor(0);*/
-				Cliente novoCliente = new Cliente();
+				/*Cliente novoCliente = new Cliente();
 				novoCliente.setNome("João");
 				novoCliente.setSobrenome("da Silva");
-				novoCliente.setCpf("00590028910");
+				novoCliente.setCpf("005.900.289-10");
 				novoCliente.setSexo(Sexo.MASCULINO);
 				novoCliente.setEndereco("Rua das couves");
-				novoCliente.setDataDeNascimento(LocalDate.of(1983, 9, 14));
+				novoCliente.setDataDeNascimento(LocalDate.of(2018, 9, 14));
 				this.clienteService.inserir(novoCliente);
-				System.out.println("Cliente salvo com sucesso");
+				System.out.println("Cliente salvo com sucesso");*/
+				
+				Peca novaPeca = new Peca();
+				novaPeca.setDescricao("Teclado");
+				novaPeca.setQtdeEmEstoque(10);
+				System.out.println(novaPeca);
+				this.pecaService.inserir(null);
+				System.out.println("Peça inserida com sucesso");
 			}catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
