@@ -9,13 +9,14 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-import br.com.senai.manutencaosenaiapi.view.TelaCadastroDeTipo;
+import br.com.senai.manutencaosenaiapi.view.TelaCadastroDePeca;
+import br.com.senai.manutencaosenaiapi.view.TelaConsultaDePeca;
 
 @SpringBootApplication
 public class InitApp {
 	
 	@Autowired
-	private TelaCadastroDeTipo telaDeCadastroDeTipo;
+	private TelaConsultaDePeca telaDeConsulta;
 
 	public static void main(String[] args) {
 		SpringApplicationBuilder builder = 
@@ -32,7 +33,7 @@ public class InitApp {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {							
-							telaDeCadastroDeTipo.setVisible(true);
+							telaDeConsulta.setVisible(true);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
