@@ -9,7 +9,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-import br.com.senai.manutencaosenaiapi.view.TelaCadastroDePeca;
 import br.com.senai.manutencaosenaiapi.view.TelaConsultaDePeca;
 
 @SpringBootApplication

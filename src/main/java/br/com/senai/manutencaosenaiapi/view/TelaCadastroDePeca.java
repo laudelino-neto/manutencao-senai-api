@@ -15,6 +15,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import br.com.senai.manutencaosenaiapi.entity.Peca;
@@ -34,6 +35,11 @@ public class TelaCadastroDePeca extends JFrame {
 	
 	@Autowired
 	private PecaService service;
+	
+	@Autowired
+	@Lazy
+	private TelaConsultaDePeca telaDeConsulta;
+	
 	private JTextField edtQtde;
 
 	/**
@@ -101,20 +107,24 @@ public class TelaCadastroDePeca extends JFrame {
 		lblEspecificacoes = new JLabel("Especificações");
 		
 		jtaEspecificacoes = new JTextArea();
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				telaDeConsulta.setVisible(true);
+				setVisible(false);
+			}
+		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(425, Short.MAX_VALUE)
-					.addComponent(btnSalvar)
-					.addContainerGap())
-				.addGroup(gl_contentPane.createSequentialGroup()
 					.addComponent(lblEspecificacoes)
 					.addContainerGap())
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(jtaEspecificacoes, GroupLayout.PREFERRED_SIZE, 486, GroupLayout.PREFERRED_SIZE)
-						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(edtId, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblId))
@@ -127,6 +137,11 @@ public class TelaCadastroDePeca extends JFrame {
 								.addComponent(edtQtde, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblQtde))))
 					.addGap(14))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(btnCancelar)
+					.addPreferredGap(ComponentPlacement.RELATED, 333, Short.MAX_VALUE)
+					.addComponent(btnSalvar)
+					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -145,7 +160,9 @@ public class TelaCadastroDePeca extends JFrame {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(jtaEspecificacoes, GroupLayout.PREFERRED_SIZE, 159, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-					.addComponent(btnSalvar))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnCancelar)
+						.addComponent(btnSalvar)))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
