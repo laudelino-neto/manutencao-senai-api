@@ -75,7 +75,7 @@ public class TelaConsultaDePeca extends JFrame {
 		JButton btnAdicionar = new JButton("Adicionar");
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				telaDeCadastro.setVisible(true);
+				telaDeCadastro.colocarEmInclusao();
 				setVisible(false);
 			}
 		});

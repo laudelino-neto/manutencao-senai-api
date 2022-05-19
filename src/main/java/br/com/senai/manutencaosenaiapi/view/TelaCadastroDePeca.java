@@ -173,4 +173,12 @@ public class TelaCadastroDePeca extends JFrame {
 		jtaEspecificacoes.setText(pecaSalva.getEspecificacoes());
 		edtQtde.setText(pecaSalva.getQtdeEmEstoque().toString());
 	}
+	
+	public void colocarEmInclusao() {
+		edtId.setText("");
+		edtDescricao.setText("");
+		jtaEspecificacoes.setText("");
+		edtQtde.setText("");
+		setVisible(true);
+	}
 }
