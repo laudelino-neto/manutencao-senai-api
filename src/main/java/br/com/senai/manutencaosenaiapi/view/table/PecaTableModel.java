@@ -6,7 +6,9 @@ import javax.swing.table.AbstractTableModel;
 
 import br.com.senai.manutencaosenaiapi.entity.Peca;
 
-public class PecaTableModel extends AbstractTableModel{
+public class PecaTableModel extends AbstractTableModel {
+
+	private static final long serialVersionUID = 1L;
 
 	private final int QTDE_COLUNAS = 3;
 	
