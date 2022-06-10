@@ -65,4 +65,8 @@ public class ClienteService {
 				"O cliente deve possuir mais de 12 anos");
 	}
 	
+	public List<Cliente> listarTodos(){
+		return repository.findAll();
+	}
+	
 }

@@ -1,31 +1,42 @@
 package br.com.senai.manutencaosenaiapi.view;
 
-import java.awt.BorderLayout;
 import java.io.Serializable;
+import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JComboBox;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JFormattedTextField;
-import javax.swing.JTextArea;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import br.com.senai.manutencaosenaiapi.entity.Cliente;
+import br.com.senai.manutencaosenaiapi.service.ClienteService;
+
+@Component
 public class TelaOrdemDeServico extends JFrame implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	private JPanel contentPane;
+	
+	@Autowired
+	private ClienteService clienteService;
 
 	/**
 	 * Create the frame.
 	 */
 	public TelaOrdemDeServico() {
+		List<Cliente> clientes = clienteService.listarTodos();
 		setResizable(false);
 		setTitle("Ordens de Serviço");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,7 +47,10 @@ public class TelaOrdemDeServico extends JFrame implements Serializable {
 		
 		JLabel lblNewLabel = new JLabel("Cliente");
 		
-		JComboBox cbCliente = new JComboBox();
+		JComboBox<Cliente> cbCliente = new JComboBox<>();
+		for (Cliente cliente : clientes) {
+			cbCliente.addItem(cliente);
+		}
 		
 		JLabel lblNewLabel_1 = new JLabel("Técnico");
 		
