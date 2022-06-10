@@ -37,6 +37,8 @@ public class TelaLogin extends JFrame {
 	
 	private JComboBox<String> cbPerfil;
 	
+	private TelaOrdemDeServico telaDeOrdem;
+	
 	private void carregarOpcoes() {
 		this.cbPerfil.addItem("Atendente");
 		this.cbPerfil.addItem("Técnico");
