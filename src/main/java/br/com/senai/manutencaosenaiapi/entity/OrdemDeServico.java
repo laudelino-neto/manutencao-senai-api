@@ -64,8 +64,7 @@ public class OrdemDeServico {
 	@JoinTable(
 		name = "pecas_reparos",
 		joinColumns = @JoinColumn(name = "id_ordem"),
-		inverseJoinColumns = @JoinColumn(name = "id_peca"))
-	@NotEmpty(message = "Deve haver ao menos uma peça de reparo")
+		inverseJoinColumns = @JoinColumn(name = "id_peca"))	
 	private List<Peca> pecasDoReparo;
 	
 }

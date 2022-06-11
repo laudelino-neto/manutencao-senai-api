@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import br.com.senai.manutencaosenaiapi.entity.Login;
@@ -37,6 +38,7 @@ public class TelaLogin extends JFrame {
 	
 	private JComboBox<String> cbPerfil;
 	
+	@Autowired	
 	private TelaOrdemDeServico telaDeOrdem;
 	
 	private void carregarOpcoes() {
@@ -78,6 +80,7 @@ public class TelaLogin extends JFrame {
 						JOptionPane.showMessageDialog(contentPane, 
 								"Seja bem vindo " + loginEncontrado.getLogin() 
 								+ "\nPerfil: " + cbPerfil.getSelectedItem());
+						telaDeOrdem.apresentarTela();
 					}else {
 						JOptionPane.showMessageDialog(contentPane, "Técnico acessando");
 					}

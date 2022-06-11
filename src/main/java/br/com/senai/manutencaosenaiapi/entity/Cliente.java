@@ -24,17 +24,19 @@ import lombok.ToString;
 @Entity(name = "Cliente")
 @Table(name = "clientes")
 @Data
-@ToString
+@ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Cliente {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
+	@ToString.Include
 	private Integer id;
 	
 	@Column(name = "nome")
 	@NotEmpty(message = "O nome não pode ser nulo")
+	@ToString.Include
 	private String nome;
 	
 	@Column(name = "sobrenome")

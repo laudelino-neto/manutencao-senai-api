@@ -1,6 +1,9 @@
 package br.com.senai.manutencaosenaiapi.view;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.GroupLayout;
@@ -10,17 +13,27 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.senai.manutencaosenaiapi.entity.Cliente;
+import br.com.senai.manutencaosenaiapi.entity.OrdemDeServico;
+import br.com.senai.manutencaosenaiapi.entity.Peca;
+import br.com.senai.manutencaosenaiapi.entity.Tecnico;
 import br.com.senai.manutencaosenaiapi.service.ClienteService;
+import br.com.senai.manutencaosenaiapi.service.OrdemDeServicoService;
+import br.com.senai.manutencaosenaiapi.service.PecaService;
+import br.com.senai.manutencaosenaiapi.service.TecnicoService;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 @Component
 public class TelaOrdemDeServico extends JFrame implements Serializable {
@@ -31,12 +44,47 @@ public class TelaOrdemDeServico extends JFrame implements Serializable {
 	
 	@Autowired
 	private ClienteService clienteService;
+	
+	@Autowired
+	private TecnicoService tecnicoService;
+	
+	@Autowired
+	private PecaService pecaService;
+	
+	@Autowired
+	private OrdemDeServicoService ordemService;
+	
+	private JComboBox<Cliente> cbCliente;
+	
+	private JComboBox<Tecnico> cbTecnico;
+	
+	private JComboBox<Peca> cbPeca;
+	
+	public void carregarCombos() {
+		List<Cliente> clientes = clienteService.listarTodos();
+		for (Cliente cliente : clientes) {
+			cbCliente.addItem(cliente);
+		}
+		List<Tecnico> tecnicos = tecnicoService.listarTodos();
+		for (Tecnico tecnico : tecnicos) {
+			cbTecnico.addItem(tecnico);
+		}
+		List<Peca> pecas = pecaService.listarTodas();
+		for (Peca peca : pecas) {
+			cbPeca.addItem(peca);
+		}
+	}
+	
+	public void apresentarTela() {
+		this.setVisible(true);
+		this.carregarCombos();
+	}
 
 	/**
 	 * Create the frame.
+	 * @throws ParseException 
 	 */
-	public TelaOrdemDeServico() {
-		List<Cliente> clientes = clienteService.listarTodos();
+	public TelaOrdemDeServico() throws ParseException {		
 		setResizable(false);
 		setTitle("Ordens de Serviço");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,20 +95,19 @@ public class TelaOrdemDeServico extends JFrame implements Serializable {
 		
 		JLabel lblNewLabel = new JLabel("Cliente");
 		
-		JComboBox<Cliente> cbCliente = new JComboBox<>();
-		for (Cliente cliente : clientes) {
-			cbCliente.addItem(cliente);
-		}
+		cbCliente = new JComboBox<>();		
 		
 		JLabel lblNewLabel_1 = new JLabel("Técnico");
 		
-		JComboBox cbTecnico = new JComboBox();
+		cbTecnico = new JComboBox();
 		
 		JLabel lblNewLabel_2 = new JLabel("Abertura");
 		
-		JFormattedTextField fmtAbertura = new JFormattedTextField();
+		JFormattedTextField fmtAbertura = new JFormattedTextField(
+				new MaskFormatter("##/##/####"));
 		
-		JFormattedTextField ftmEncerramento = new JFormattedTextField();
+		JFormattedTextField ftmEncerramento = new JFormattedTextField(
+				new MaskFormatter("##/##/####"));
 		
 		JLabel lblNewLabel_3 = new JLabel("Encerramento");
 		
@@ -74,7 +121,7 @@ public class TelaOrdemDeServico extends JFrame implements Serializable {
 		
 		JLabel lblNewLabel_6 = new JLabel("Peça");
 		
-		JComboBox cbPeca = new JComboBox();
+		cbPeca = new JComboBox();
 		
 		JButton btnAddPeca = new JButton("Adicionar");
 		
@@ -83,6 +130,26 @@ public class TelaOrdemDeServico extends JFrame implements Serializable {
 		JButton btnRemoverPeca = new JButton("Remover Peça Selecionada");
 		
 		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				OrdemDeServico novaOrdem = new OrdemDeServico();
+				Cliente clienteSelecionado = (Cliente)cbCliente.getSelectedItem();
+				novaOrdem.setCliente(clienteSelecionado);
+				Tecnico tecnicoSelecionado = (Tecnico)cbTecnico.getSelectedItem();
+				novaOrdem.setTecnico(tecnicoSelecionado);
+				novaOrdem.setDescricaoDoProblema(jtaProblema.getText());
+				String[] camposDaData = fmtAbertura.getText().split("/");
+				LocalDate dataDeAbertura = LocalDate.of(
+						Integer.parseInt(camposDaData[2]), 
+						Integer.parseInt(camposDaData[1]), 
+						Integer.parseInt(camposDaData[0]));
+				novaOrdem.setDataDeAbertura(dataDeAbertura);
+				novaOrdem.setPecasDoReparo(new ArrayList<>());
+				ordemService.inserir(novaOrdem);
+				JOptionPane.showMessageDialog(
+						contentPane, "Ordem salva com sucesso");
+			}
+		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)

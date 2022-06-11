@@ -64,4 +64,8 @@ public class TecnicoService {
 		return repository.findById(id).get();
 	}
 	
+	public List<Tecnico> listarTodos(){
+		return repository.findAll();
+	}
+	
 }

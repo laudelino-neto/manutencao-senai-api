@@ -13,22 +13,26 @@ import javax.validation.constraints.Size;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Entity(name = "Peca")
 @Table(name = "pecas")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 public class Peca {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
+	@ToString.Include
 	private Integer id;
 	
 	@Column(name = "descricao")
 	@NotEmpty(message = "A descrição é obrigatória")
 	@Size(max = 150, message = "A descrição deve conter "
 			+ "mais de 150 caracteres")
+	@ToString.Include
 	private String descricao;
 	
 	@Column(name = "especificacoes")

@@ -52,4 +52,8 @@ public class PecaService {
 		return repository.listarPor("%" + descricao + "%");
 	}
 	
+	public List<Peca> listarTodas(){
+		return repository.findAll();
+	}
+	
 }

@@ -21,7 +21,7 @@ import lombok.ToString;
 
 @Entity(name = "Tecnico")
 @Table(name = "tecnicos")
-@ToString
+@ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Tecnico {
 	
@@ -29,12 +29,14 @@ public class Tecnico {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Getter @Setter
 	@EqualsAndHashCode.Include
+	@ToString.Include
 	private Integer id;
 	
 	@Column(name = "nm_completo")
 	@NotEmpty(message = "O nome não pode ser nulo")
 	@Size(max = 100, message = "O nome não pode conter mais de 100 caracteres")
 	@Getter @Setter
+	@ToString.Include
 	private String nomeCompleto;
 	
 	@Column(name = "dt_admissao")
